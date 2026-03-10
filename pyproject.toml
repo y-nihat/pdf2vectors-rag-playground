@@ -1,0 +1,39 @@
+[project]
+name = "pdf2vectors-rag-playground"
+version = "0.1.0"
+description = "Playground for parsing PDFs and building vector-based RAG over pixparse/pdfa-eng-wds"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "CC BY-NC 4.0" }
+
+dependencies = [
+    "datasets>=2.19.0",
+    "huggingface_hub>=0.23.0",
+    "torch>=2.2.0",
+    "numpy>=1.26.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "docling>=2.0.0",
+    "pypdfium2>=5.0.0",
+]
+
+[project.scripts]
+docling-eval = "eval.run_docling_eval:main"
+parser-comparison-eval = "eval.run_parser_comparison_eval:main"
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel",
+    "black",
+    "ruff",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
