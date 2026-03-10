@@ -9,6 +9,9 @@ from docling.document_converter import DocumentConverter
 from docling_core.types.io import DocumentStream
 
 
+SHARED_CONVERTER = DocumentConverter()
+
+
 @dataclass(slots=True)
 class ParsedDoclingResult:
     """Minimal Docling parse output used by evaluation."""
@@ -19,9 +22,8 @@ class ParsedDoclingResult:
 
 def parse_pdf_bytes(pdf_bytes: bytes, key: str) -> ParsedDoclingResult:
     """Parse PDF bytes with Docling and return markdown text."""
-    converter = DocumentConverter()
     doc_stream = DocumentStream(name=f"{key}.pdf", stream=BytesIO(pdf_bytes))
-    result = converter.convert(doc_stream)
+    result = SHARED_CONVERTER.convert(doc_stream)
     return ParsedDoclingResult(key=key, markdown=result.document.export_to_markdown())
 
 

@@ -81,6 +81,16 @@ def _write_delta_outliers(rows: list[dict[str, Any]], out_dir: Path, count: int)
 
 def _aggregate_metrics(rows: list[dict[str, Any]], prefix: str) -> dict[str, float]:
     """Aggregate parser-specific metrics for summary reporting."""
+    if not rows:
+        return {
+            "mean_char_similarity": float("nan"),
+            "median_char_similarity": float("nan"),
+            "mean_token_f1": float("nan"),
+            "median_token_f1": float("nan"),
+            "mean_length_ratio": float("nan"),
+            "median_length_ratio": float("nan"),
+        }
+
     return {
         "mean_char_similarity": statistics.fmean(row[f"{prefix}_char_similarity"] for row in rows),
         "median_char_similarity": statistics.median(row[f"{prefix}_char_similarity"] for row in rows),
